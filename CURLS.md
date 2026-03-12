@@ -1,8 +1,11 @@
 # BTG Fund Management — Colección de cURLs para Pruebas
 
-> **Base URL:** `http://localhost:8080`  
+> **Base URL Local:** `http://localhost:8080`  
+> **Base URL Producción (AWS EC2):** `http://34.201.44.132:8080`  
 > **Autenticación:** JWT Bearer Token (header `Authorization: Bearer <TOKEN>`)  
 > **Content-Type:** `application/json`
+
+> ⚡ La aplicación está desplegada en **AWS EC2 (us-east-1)** con **MongoDB Atlas M0**. Puedes reemplazar `localhost:8080` por `34.201.44.132:8080` en cualquier comando para probar el entorno de producción.
 
 ---
 
@@ -28,13 +31,23 @@
 
 ## 1. Pre-requisitos
 
-Asegurar que el proyecto esté corriendo:
+Elige el entorno donde quieres probar:
 
+**Opción A — Producción en AWS (sin instalación local):**
+```bash
+# La app ya está corriendo. Solo reemplaza localhost por la IP de AWS:
+# http://34.201.44.132:8080
+curl -s http://34.201.44.132:8080/actuator/health
+```
+
+**Opción B — Local con Docker Compose:**
 ```bash
 # Levantar MongoDB y la aplicación con Docker Compose
 docker-compose up -d
+```
 
-# O ejecutar directamente con Maven (requiere MongoDB local en puerto 27017)
+**Opción C — Local con Maven (requiere MongoDB local en puerto 27017):**
+```bash
 ./mvnw spring-boot:run
 ```
 

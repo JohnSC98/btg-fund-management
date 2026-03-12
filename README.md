@@ -99,6 +99,28 @@ En las peticiones protegidas enviar: `Authorization: Bearer <token>`.
 
 Tests unitarios del servicio de suscripciones (subscribe, unsubscribe, validaciones). Cobertura objetivo ≥ 80%.
 
+## Despliegue en AWS (Producción)
+
+La aplicación está desplegada y disponible públicamente en AWS:
+
+| Entorno | URL | Estado |
+|---------|-----|--------|
+| **Producción (AWS EC2)** | `http://34.201.44.132:8080` | ✅ Activo |
+| **Local (Docker Compose)** | `http://localhost:8080` | desarrollo |
+
+**Infraestructura utilizada:**
+- **EC2 t2.micro** (Amazon Linux 2023) — capa gratuita de AWS
+- **MongoDB Atlas M0** — capa gratuita, región us-east-1
+- **Amazon ECR** — registro de imagen Docker
+
+Health check en producción:
+```bash
+curl http://34.201.44.132:8080/actuator/health
+# Respuesta: {"status":"UP"}
+```
+
+---
+
 ## Despliegue en AWS (CloudFormation)
 
 1. **Crear imagen Docker** y subirla a ECR:
