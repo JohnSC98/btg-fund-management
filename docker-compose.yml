@@ -1,0 +1,31 @@
+services:
+  mongodb:
+    image: mongo:7
+    container_name: btg-mongodb
+    ports:
+      - "27017:27017"
+    command: ["mongod", "--replSet", "rs0"]
+    volumes:
+      - mongo-data:/data/db
+      - ./mongo-init/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    healthcheck:
+      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'mongodb:27017'}]}) }" | mongosh --quiet
+      interval: 5s
+      timeout: 30s
+      start_period: 10s
+      retries: 30
+
+  app:
+    build: .
+    container_name: btg-fund-app
+    ports:
+      - "8080:8080"
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/btg_funds
+      JWT_SECRET: dev-secret-key-for-local-testing-must-be-at-least-256-bits-long
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
+volumes:
+  mongo-data:

@@ -1,0 +1,10 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/btg_funds_test
+
+app:
+  initial-balance: 500000
+  jwt:
+    secret: test-secret-at-least-256-bits-required-for-hs256-algorithm
+    expiration-ms: 3600000

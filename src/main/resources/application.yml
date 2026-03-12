@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: btg-fund-management
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/btg_funds}
+      auto-index-creation: true
+
+# Initial balance for new users (COP)
+app:
+  initial-balance: 500000
+  jwt:
+    secret: ${JWT_SECRET:your-256-bit-secret-change-in-production-must-be-long-enough}
+    expiration-ms: 86400000  # 24h
+
+server:
+  port: ${PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+
+logging:
+  level:
+    com.btgpactual: INFO
+    org.springframework.security: INFO
